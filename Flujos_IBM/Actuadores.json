@@ -83,9 +83,9 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload['Status']",
+                "p": "payload",
                 "pt": "msg",
-                "to": "1",
+                "to": "{\"Status\":\"1\"}",
                 "tot": "str"
             }
         ],
@@ -111,9 +111,9 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload['Status']",
+                "p": "payload",
                 "pt": "msg",
-                "to": "0",
+                "to": "{\"Status\":\"0\"}",
                 "tot": "str"
             }
         ],
