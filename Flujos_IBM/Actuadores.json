@@ -1,0 +1,1154 @@
+[
+    {
+        "id": "888e35f9.ebe528",
+        "type": "tab",
+        "label": "Actuadores",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a47dbfd8.a0368",
+        "type": "ibmiot in",
+        "z": "888e35f9.ebe528",
+        "authentication": "apiKey",
+        "apiKey": "b75f3fb8.2c947",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "42",
+        "applicationId": "",
+        "deviceType": "AC",
+        "eventType": "event",
+        "commandType": "",
+        "format": "json",
+        "name": "Entrada de actuador",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": "",
+        "allEvents": false,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 124.5,
+        "y": 107,
+        "wires": [
+            [
+                "6080f21d.7f0e7c"
+            ]
+        ]
+    },
+    {
+        "id": "1c405462.4b4fcc",
+        "type": "http in",
+        "z": "888e35f9.ebe528",
+        "name": "Encendido",
+        "url": "/ac/on",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 241.58341217041016,
+        "y": 376.4999933242798,
+        "wires": [
+            [
+                "c2296dee.6e9f",
+                "53469f57.d9d38"
+            ]
+        ]
+    },
+    {
+        "id": "29714723.706fb8",
+        "type": "http in",
+        "z": "888e35f9.ebe528",
+        "name": "Apagado",
+        "url": "/ac/off",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 240.25006866455078,
+        "y": 438.166672706604,
+        "wires": [
+            [
+                "c295f253.d8c41",
+                "eda0c709.5a40a8"
+            ]
+        ]
+    },
+    {
+        "id": "c2296dee.6e9f",
+        "type": "change",
+        "z": "888e35f9.ebe528",
+        "name": "Manda Status = 1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload['Status']",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 448.0000915527344,
+        "y": 376.50000190734863,
+        "wires": [
+            [
+                "3a459c76.b7c1a4",
+                "51dda7df.2563e8"
+            ]
+        ]
+    },
+    {
+        "id": "c295f253.d8c41",
+        "type": "change",
+        "z": "888e35f9.ebe528",
+        "name": "Manda status = 0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload['Status']",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 445.5000915527344,
+        "y": 438.5000286102295,
+        "wires": [
+            [
+                "3a459c76.b7c1a4",
+                "51dda7df.2563e8"
+            ]
+        ]
+    },
+    {
+        "id": "3a459c76.b7c1a4",
+        "type": "ibmiot out",
+        "z": "888e35f9.ebe528",
+        "authentication": "apiKey",
+        "apiKey": "b75f3fb8.2c947",
+        "outputType": "cmd",
+        "deviceId": "42",
+        "deviceType": "AC",
+        "eventCommandType": "switch",
+        "format": "json",
+        "data": "",
+        "qos": 0,
+        "name": "Envío de comando",
+        "service": "registered",
+        "x": 933.0834274291992,
+        "y": 407.16671562194824,
+        "wires": []
+    },
+    {
+        "id": "53469f57.d9d38",
+        "type": "http response",
+        "z": "888e35f9.ebe528",
+        "name": "OK",
+        "statusCode": "200",
+        "headers": {},
+        "x": 281.2500762939453,
+        "y": 291.50000190734863,
+        "wires": []
+    },
+    {
+        "id": "eda0c709.5a40a8",
+        "type": "http response",
+        "z": "888e35f9.ebe528",
+        "name": "OK",
+        "statusCode": "200",
+        "headers": {},
+        "x": 277.7500762939453,
+        "y": 506.50000190734863,
+        "wires": []
+    },
+    {
+        "id": "51dda7df.2563e8",
+        "type": "ui_switch",
+        "z": "888e35f9.ebe528",
+        "name": "",
+        "label": "Interruptor de AC",
+        "tooltip": "",
+        "group": "746f7aba.aa0414",
+        "order": 2,
+        "width": "10",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "{\"Status\":\"1\"}",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"Status\":\"0\"}",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 689.9167633056641,
+        "y": 406.83333110809326,
+        "wires": [
+            [
+                "3a459c76.b7c1a4"
+            ]
+        ]
+    },
+    {
+        "id": "3f32a507.60054a",
+        "type": "ui_text",
+        "z": "888e35f9.ebe528",
+        "group": "716dc026.3d7a5",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "Valor y antigüedad del dato",
+        "label": "{{msg.payload['Timestamp']}}",
+        "format": "Consumo: {{msg.payload['Consum']}} {{msg.payload['Units']}}",
+        "layout": "row-spread",
+        "x": 694.8333053588867,
+        "y": 107.24999451637268,
+        "wires": []
+    },
+    {
+        "id": "6080f21d.7f0e7c",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Adecuación datos",
+        "func": "// El mensaje viene con los datos anidados\n// en un campo llamado d\nmsg.payload = msg.payload.d;\n\n// Se da a la fecha un formato string adecuado\nvar aux = msg.payload.Timestamp.split('T');\nmsg.payload.Timestamp = aux[0] + ' ' + aux[1].split('.')[0]\n\n// Redondea el consumo para que no salgan\n// demasiados decimales\nvar aux2 = Math.round(msg.payload.Consum*10000000)/10000000;\nmsg.payload.Consum = aux2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 356.33331298828125,
+        "y": 108.33333206176758,
+        "wires": [
+            [
+                "3f32a507.60054a",
+                "599e3630.bd24c8",
+                "30ca24f8.3994ec"
+            ]
+        ]
+    },
+    {
+        "id": "32d3e87a.220088",
+        "type": "ui_chart",
+        "z": "888e35f9.ebe528",
+        "name": "Gráfica en tiempo real de datos",
+        "group": "716dc026.3d7a5",
+        "order": 2,
+        "width": "10",
+        "height": "7",
+        "label": "{{msg.topic}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Esperando datos",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "0.002",
+        "removeOlder": "30",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 951.8334274291992,
+        "y": 163.08333587646484,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "599e3630.bd24c8",
+        "type": "change",
+        "z": "888e35f9.ebe528",
+        "name": "Selecciona datos y el título de gráfica",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload['magnitud']",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload['Consum']",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 613.3333129882812,
+        "y": 163.33333206176758,
+        "wires": [
+            [
+                "32d3e87a.220088"
+            ]
+        ]
+    },
+    {
+        "id": "12e118f4.4704f7",
+        "type": "dashDB out",
+        "z": "888e35f9.ebe528",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "table": "ENERGY_CONSUMPTION",
+        "name": "Lecturas de consumo a 'ENERGY_CONSUMPTION'",
+        "x": 1022.8333358764648,
+        "y": 56.08333492279053,
+        "wires": []
+    },
+    {
+        "id": "30ca24f8.3994ec",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Mensaje con variables de la BBDD",
+        "func": "msg.payload = {\n    ACTION_ID: msg.payload.Action_Id,\n    ACTION_DATE: msg.payload.Timestamp,\n    CONS_VALUE: msg.payload.Consum,\n    CONS_UNITS: msg.payload.Units,\n    ACTUATOR_ID: msg.payload.Actuator_Id\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 618.0833129882812,
+        "y": 57.83333110809326,
+        "wires": [
+            [
+                "12e118f4.4704f7"
+            ]
+        ]
+    },
+    {
+        "id": "13a93263.f095be",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Mensaje vacío para limpiar",
+        "func": "msg.payload = [];\nmsg.topic = '';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 708.583381652832,
+        "y": 211.0833568572998,
+        "wires": [
+            [
+                "32d3e87a.220088"
+            ]
+        ]
+    },
+    {
+        "id": "c520bc37.11d07",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Datos en estructura correcta",
+        "func": "// Crea las variables necesarias para la nueva estructura\nvar series =[\"Value\"];\nvar labels = [\"Labels\"];\nvar data = [];\nvar i, len, string;\n\n// Flujo a lo largo de todas las filas extraídas de la base de datos\nfor (i = 1, len = msg.payload.length, string = \"\"; i < len; i++) {\n    // Actualiza la variable data añadiendo cada fila en el formato correcto\n    data.push({\"x\":new Date((Math.round(new Date(msg.payload[i].ACTION_DATE).getTime()/1000)-2*3600)*1000), \"y\":msg.payload[i].CONS_VALUE});\n}\n\ndata = [data];\n\n// Guarda el nombre de la gráfica y los datos a representar\nmsg.topic = msg.payload[1].PROPERTY_NAME;\nmsg.payload = [{series, data, labels}];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 827.7500152587891,
+        "y": 650.7500190734863,
+        "wires": [
+            [
+                "56e9febd.00d4"
+            ]
+        ]
+    },
+    {
+        "id": "56e9febd.00d4",
+        "type": "ui_chart",
+        "z": "888e35f9.ebe528",
+        "name": "Histórico",
+        "group": "4552f5ef.44e6cc",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "{{msg.topic}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Selecciona fecha",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1082.5000076293945,
+        "y": 651.2500114440918,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7eca4dda.87c2f4",
+        "type": "ui_form",
+        "z": "888e35f9.ebe528",
+        "name": "Cuestionario para consultar histórico",
+        "label": "",
+        "group": "4552f5ef.44e6cc",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Fecha inicial",
+                "value": "Fecha_ini",
+                "type": "date",
+                "required": true
+            },
+            {
+                "label": "Fecha final",
+                "value": "Fecha_fin",
+                "type": "date",
+                "required": true
+            },
+            {
+                "label": "ID Actuador",
+                "value": "Actuator_Id",
+                "type": "number",
+                "required": true
+            },
+            {
+                "label": "Hora inicial",
+                "value": "hora_ini",
+                "type": "number",
+                "required": true
+            },
+            {
+                "label": "Hora final",
+                "value": "hora_fin",
+                "type": "number",
+                "required": true
+            }
+        ],
+        "formValue": {
+            "Fecha_ini": "",
+            "Fecha_fin": "",
+            "Actuator_Id": "",
+            "hora_ini": "",
+            "hora_fin": ""
+        },
+        "payload": "",
+        "submit": "Consultar",
+        "cancel": "Cancelar",
+        "topic": "",
+        "x": 172.00001525878906,
+        "y": 653.250018119812,
+        "wires": [
+            [
+                "94a82d79.826bf"
+            ]
+        ]
+    },
+    {
+        "id": "94a82d79.826bf",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Query consulta",
+        "func": "// Almacena las variables que forman la consulta\nvar fini = Math.round(new Date(msg.payload['Fecha_ini']).getTime()/1000) + 2*3600;\nvar ffin = Math.round(new Date(msg.payload['Fecha_fin']).getTime()/1000) + 2*3600;\nvar senid = msg.payload['Actuator_Id'];\nvar hini = msg.payload['hora_ini'];\nvar hfin = msg.payload['hora_fin'];\n\n// Fecha en formato correcto\nfini = new Date(fini*1000).toISOString();\nffin = new Date(ffin*1000).toISOString();\n\nfini = fini.split('T')[0];\nffin = ffin.split('T')[0];\n\n// Modifica las variables de flujo para poder usarlas en la consulta de métrica\nflow.set(['fini','ffin','hini','hfin','senid'],\n         [fini,ffin,hini,hfin,senid]);\n         \n// Crea la query\nvar query = \"\";\n\nquery = \"SELECT ACTION_DATE, CONS_VALUE, \"+\n        \"PROPERTY_NAME FROM ENERGY_CONSUMPTION\"+\n        \" AS A LEFT JOIN PHYSICAL_PROPERTIES AS\"+\n        \" B ON A.CONS_UNITS = B.PROPERTY_UNITS \"+\n        \"WHERE ACTION_DATE >= '\"+fini+\" \"+\n        hini.toString()+\":00:00' AND \"+\n        \"ACTION_DATE <= '\"+ffin+\" \"+\n        hfin.toString()+\":00:00' AND \"+\n        \"ACTUATOR_ID = \"+senid.toString()+\n        \" ORDER BY ACTION_DATE;\";\n        \n// Guarda la query\nmsg.payload = query;\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 414.2500305175781,
+        "y": 652.000018119812,
+        "wires": [
+            [
+                "cde299dd.355b58"
+            ]
+        ]
+    },
+    {
+        "id": "580d7165.86bc3",
+        "type": "ui_dropdown",
+        "z": "888e35f9.ebe528",
+        "name": "Métrica a consultar",
+        "label": "Consulta de valor",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "4552f5ef.44e6cc",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "Máximo",
+                "value": "MAX",
+                "type": "str"
+            },
+            {
+                "label": "Mínimo",
+                "value": "MIN",
+                "type": "str"
+            },
+            {
+                "label": "Medio",
+                "value": "AVG",
+                "type": "str"
+            },
+            {
+                "label": "Suma",
+                "value": "SUM",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 167.50000762939453,
+        "y": 722.2500076293945,
+        "wires": [
+            [
+                "6acc511e.bcb06"
+            ]
+        ]
+    },
+    {
+        "id": "bdd2ece3.31da8",
+        "type": "dashDB in",
+        "z": "888e35f9.ebe528",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 581.75,
+        "y": 724.7499961853027,
+        "wires": [
+            [
+                "a1fc6eee.23749"
+            ]
+        ]
+    },
+    {
+        "id": "6acc511e.bcb06",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Query consulta",
+        "func": "// Obtiene las variables de flujo del cuestionario anterior y la métrica\nvar fini = flow.get('fini');\nvar ffin = flow.get('ffin');\nvar senid = flow.get('senid');\nvar hini = flow.get('hini');\nvar hfin = flow.get('hfin');\nvar value = msg.payload;\n\n// Crea la query\nvar query = \"\";\n\nquery = \"SELECT \"+value+\"(CONS_VALUE) AS \"+\n        \"CONS_VALUE, CONS_UNITS FROM \"+\n        \"ENERGY_CONSUMPTION WHERE \"+\n        \"ACTION_DATE >= '\"+fini+\" \"+\n        hini.toString()+\":00:00' AND \"+\n        \"ACTION_DATE <= '\"+ffin+\" \"+\n        hfin.toString()+\":00:00' AND \"+\n        \"ACTUATOR_ID = \"+senid.toString()+\n        \" GROUP BY CONS_UNITS;\";\n\n// Guarda la query\nmsg.payload = query;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 368.00000762939453,
+        "y": 722.2500076293945,
+        "wires": [
+            [
+                "bdd2ece3.31da8"
+            ]
+        ]
+    },
+    {
+        "id": "a1fc6eee.23749",
+        "type": "ui_text",
+        "z": "888e35f9.ebe528",
+        "group": "4552f5ef.44e6cc",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Resultado",
+        "format": "{{msg.payload['CONS_VALUE']}}{{msg.payload['CONS_UNITS']}}",
+        "layout": "row-spread",
+        "x": 779.5000076293945,
+        "y": 724.2500076293945,
+        "wires": []
+    },
+    {
+        "id": "1c1281af.29a54e",
+        "type": "ui_button",
+        "z": "888e35f9.ebe528",
+        "name": "",
+        "group": "716dc026.3d7a5",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Limpiar gráfica",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 424.33331298828125,
+        "y": 212.33333206176758,
+        "wires": [
+            [
+                "13a93263.f095be"
+            ]
+        ]
+    },
+    {
+        "id": "adc58675.c3bc58",
+        "type": "ui_numeric",
+        "z": "888e35f9.ebe528",
+        "name": "",
+        "label": "Selección de temperatura",
+        "tooltip": "",
+        "group": "746f7aba.aa0414",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "format": "{{value}}",
+        "min": "17",
+        "max": "28",
+        "step": 1,
+        "x": 696.0000686645508,
+        "y": 487.2500305175781,
+        "wires": [
+            [
+                "b4bb4bda.7e9ce8"
+            ]
+        ]
+    },
+    {
+        "id": "b4bb4bda.7e9ce8",
+        "type": "ibmiot out",
+        "z": "888e35f9.ebe528",
+        "authentication": "apiKey",
+        "apiKey": "b75f3fb8.2c947",
+        "outputType": "cmd",
+        "deviceId": "42",
+        "deviceType": "AC",
+        "eventCommandType": "controltemp",
+        "format": "json",
+        "data": "",
+        "qos": 0,
+        "name": "Manda temperatura de control del AC",
+        "service": "registered",
+        "x": 1015.5000686645508,
+        "y": 486.7500286102295,
+        "wires": []
+    },
+    {
+        "id": "cde299dd.355b58",
+        "type": "dashDB in",
+        "z": "888e35f9.ebe528",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 597.0000152587891,
+        "y": 651.2500114440918,
+        "wires": [
+            [
+                "c520bc37.11d07"
+            ]
+        ]
+    },
+    {
+        "id": "18edc672.3f29ba",
+        "type": "ui_button",
+        "z": "888e35f9.ebe528",
+        "name": "Botón consumo de hoy",
+        "group": "98d361fb.22f9a",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Solicitar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 147.50000762939453,
+        "y": 793.4999980926514,
+        "wires": [
+            [
+                "6bfc32e9.d176dc"
+            ]
+        ]
+    },
+    {
+        "id": "6bfc32e9.d176dc",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Query consulta",
+        "func": "// Crea la query\nvar query = \"\";\n\nquery = \"SELECT SUM(CONS_VALUE) AS \"+\n        \"CONS_VALUE, CONS_UNITS FROM \"+\n        \"ENERGY_CONSUMPTION WHERE \"+\n        \"ACTION_DATE >= CURRENT DATE AND \"+\n        \"ACTION_DATE < CURRENT DATE+1 \"+\n        \"GROUP BY CONS_UNITS;\";\n\n// Guarda la query\nmsg.payload = query;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 357.50000762939453,
+        "y": 794.2500076293945,
+        "wires": [
+            [
+                "54623538.fd7d3c"
+            ]
+        ]
+    },
+    {
+        "id": "54623538.fd7d3c",
+        "type": "dashDB in",
+        "z": "888e35f9.ebe528",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 550.7500152587891,
+        "y": 794.2500429153442,
+        "wires": [
+            [
+                "629b9f38.2c154"
+            ]
+        ]
+    },
+    {
+        "id": "587387ec.bcf888",
+        "type": "ui_text",
+        "z": "888e35f9.ebe528",
+        "group": "98d361fb.22f9a",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Resultado",
+        "format": "{{msg.payload['CONS_VALUE']}}{{msg.payload['CONS_UNITS']}}",
+        "layout": "row-spread",
+        "x": 977.25,
+        "y": 795.5001201629639,
+        "wires": []
+    },
+    {
+        "id": "629b9f38.2c154",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Redondeo de valor",
+        "func": "// Redondea valor a decimales mínimos para enseñar\nmsg.payload.CONS_VALUE = Math.round(msg.payload.CONS_VALUE*10000000)/10000000;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 755.7500152587891,
+        "y": 794.5000591278076,
+        "wires": [
+            [
+                "587387ec.bcf888"
+            ]
+        ]
+    },
+    {
+        "id": "4594424a.08132c",
+        "type": "e-mail",
+        "z": "888e35f9.ebe528",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "lgbaquero@emergya.com",
+        "dname": "",
+        "x": 1188.0000457763672,
+        "y": 1085.000020980835,
+        "wires": []
+    },
+    {
+        "id": "a3f5fc0b.7846c",
+        "type": "inject",
+        "z": "888e35f9.ebe528",
+        "name": "Check consumo",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1800",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 126.25004577636719,
+        "y": 1086.2500200271606,
+        "wires": [
+            [
+                "22ac675.c674898"
+            ]
+        ]
+    },
+    {
+        "id": "22ac675.c674898",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Query consulta",
+        "func": "// Crea query\nvar query = \"\";\n\nquery = \"SELECT SUM(CONS_VALUE) AS \"+\n        \"CONS_VALUE, CONS_UNITS FROM \"+\n        \"ENERGY_CONSUMPTION WHERE \"+\n        \"ACTION_DATE >= CURRENT DATE AND \"+\n        \"ACTION_DATE < CURRENT DATE+1 \"+\n        \"GROUP BY CONS_UNITS;\";\n  \n// Guarda query      \nmsg.payload = query;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 326.0000534057617,
+        "y": 1086.2500200271606,
+        "wires": [
+            [
+                "ca290955.e4bda8"
+            ]
+        ]
+    },
+    {
+        "id": "ca290955.e4bda8",
+        "type": "dashDB in",
+        "z": "888e35f9.ebe528",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 514.7500534057617,
+        "y": 1086.2500200271606,
+        "wires": [
+            [
+                "59566e0b.a0316"
+            ]
+        ]
+    },
+    {
+        "id": "ebbcf247.92f5b",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Correo electrónico",
+        "func": "// Redondea el valor a 7 decimales para que sea legible\nmsg.payload.CONS_VALUE = Math.round(msg.payload.CONS_VALUE*10000000)/10000000\n\n// Redacta el correo electrónico\nmsg.payload = \"Modera el uso del Aire \"+\n            \"Acondicionado, hoy llevas un \"+\n            \"consumo de \"+msg.payload.CONS_VALUE.toString()+\n            \" kWh\";\n\n// Asunto del correo electrónico\nmsg.topic = \"[IARS] Consumo excesivo\"\n            \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 944.2501602172852,
+        "y": 1085.0000200271606,
+        "wires": [
+            [
+                "4594424a.08132c"
+            ]
+        ]
+    },
+    {
+        "id": "59566e0b.a0316",
+        "type": "switch",
+        "z": "888e35f9.ebe528",
+        "name": "¿Sobrepasa límite?",
+        "property": "payload.CONS_VALUE",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "3",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 716.2500534057617,
+        "y": 1086.500111579895,
+        "wires": [
+            [
+                "ebbcf247.92f5b"
+            ]
+        ]
+    },
+    {
+        "id": "c12b11e2.c121f",
+        "type": "ui_text",
+        "z": "888e35f9.ebe528",
+        "group": "e64f715b.2b85e",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tipo",
+        "format": "{{msg.payload['ACTUATOR_TYPE']}}",
+        "layout": "row-spread",
+        "x": 965.5000343322754,
+        "y": 842.5001871883869,
+        "wires": []
+    },
+    {
+        "id": "51cc488f.d89788",
+        "type": "ui_dropdown",
+        "z": "888e35f9.ebe528",
+        "name": "",
+        "label": "Selecciona ID",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "e64f715b.2b85e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "42",
+                "value": 42,
+                "type": "num"
+            },
+            {
+                "label": "Ninguno",
+                "value": "Ninguno",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 156.25,
+        "y": 920.0001697540283,
+        "wires": [
+            [
+                "d045a276.997ca"
+            ]
+        ]
+    },
+    {
+        "id": "5622e818.0672b8",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Query consulta",
+        "func": "// Crea query\nvar query = \"\";\n\nquery = \"SELECT * FROM ACTUATORS_INFO WHERE\"+\n        \" ACTUATOR_ID=\"+msg.payload.toString()+\n        \";\";\n\n// Guarda query\nmsg.payload = query;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.5000076293945,
+        "y": 911.7502002716064,
+        "wires": [
+            [
+                "61a89f16.b656f"
+            ]
+        ]
+    },
+    {
+        "id": "61a89f16.b656f",
+        "type": "dashDB in",
+        "z": "888e35f9.ebe528",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 742.5000038146973,
+        "y": 913.2501392364502,
+        "wires": [
+            [
+                "c12b11e2.c121f",
+                "ae8a4d47.58f89",
+                "d38e62a6.94bd3",
+                "31ac3967.974196"
+            ]
+        ]
+    },
+    {
+        "id": "d045a276.997ca",
+        "type": "switch",
+        "z": "888e35f9.ebe528",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "Ninguno",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Ninguno",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 336.25,
+        "y": 917.7502613067627,
+        "wires": [
+            [
+                "5622e818.0672b8"
+            ],
+            [
+                "afbe52c6.e1d0c"
+            ]
+        ]
+    },
+    {
+        "id": "ae8a4d47.58f89",
+        "type": "ui_text",
+        "z": "888e35f9.ebe528",
+        "group": "e64f715b.2b85e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Info",
+        "format": "{{msg.payload['ACTUATOR_INFO']}}",
+        "layout": "row-spread",
+        "x": 969.0000343322754,
+        "y": 887.5001871883869,
+        "wires": []
+    },
+    {
+        "id": "d38e62a6.94bd3",
+        "type": "ui_text",
+        "z": "888e35f9.ebe528",
+        "group": "e64f715b.2b85e",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Latitud",
+        "format": "{{msg.payload['ACTUATOR_LAT']}}",
+        "layout": "row-spread",
+        "x": 966.0000343322754,
+        "y": 930.5001871883869,
+        "wires": []
+    },
+    {
+        "id": "31ac3967.974196",
+        "type": "ui_text",
+        "z": "888e35f9.ebe528",
+        "group": "e64f715b.2b85e",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Longitud",
+        "format": "{{msg.payload['ACTUATOR_LON']}}",
+        "layout": "row-spread",
+        "x": 978.0000343322754,
+        "y": 971.5001871883869,
+        "wires": []
+    },
+    {
+        "id": "afbe52c6.e1d0c",
+        "type": "function",
+        "z": "888e35f9.ebe528",
+        "name": "Datos vacíos",
+        "func": "msg.payload['ACTUATOR_TYPE']='';\nmsg.payload['ACTUATOR_INFO']='';\nmsg.payload['ACTUATOR_LAT']='';\nmsg.payload['ACTUATOR_LON']='';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 741.500057220459,
+        "y": 973.2501414120197,
+        "wires": [
+            [
+                "c12b11e2.c121f",
+                "ae8a4d47.58f89",
+                "d38e62a6.94bd3",
+                "31ac3967.974196"
+            ]
+        ]
+    },
+    {
+        "id": "b75f3fb8.2c947",
+        "type": "ibmiot",
+        "z": "",
+        "name": "",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "746f7aba.aa0414",
+        "type": "ui_group",
+        "z": "",
+        "name": "Control de AC",
+        "tab": "a35053a9.36167",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "716dc026.3d7a5",
+        "type": "ui_group",
+        "z": "",
+        "name": "Lectura de consumo",
+        "tab": "a35053a9.36167",
+        "order": 3,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "84e1e922.93cef8",
+        "type": "dashDB",
+        "z": "",
+        "hostname": "dashdb-txn-sbox-yp-lon02-01.services.eu-gb.bluemix.net",
+        "db": "BLUDB",
+        "port": "50000",
+        "name": ""
+    },
+    {
+        "id": "4552f5ef.44e6cc",
+        "type": "ui_group",
+        "z": "",
+        "name": "Histórico de consumo",
+        "tab": "a35053a9.36167",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "98d361fb.22f9a",
+        "type": "ui_group",
+        "z": "",
+        "name": "Consumo de hoy",
+        "tab": "a35053a9.36167",
+        "order": 4,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "e64f715b.2b85e",
+        "type": "ui_group",
+        "z": "",
+        "name": "Actuadores",
+        "tab": "8aa74e31.134de",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "a35053a9.36167",
+        "type": "ui_tab",
+        "z": "",
+        "name": "AC",
+        "icon": "fa-snowflake-o",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8aa74e31.134de",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Dispositivos",
+        "icon": "fa-signal",
+        "disabled": false,
+        "hidden": false
+    }
+]
