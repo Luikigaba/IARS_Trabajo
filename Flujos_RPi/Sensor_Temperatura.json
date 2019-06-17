@@ -1,0 +1,181 @@
+[
+    {
+        "id": "7304cc4d.116a14",
+        "type": "tab",
+        "label": "Sensor_temp",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "83f821f2.7527e",
+        "type": "inject",
+        "z": "7304cc4d.116a14",
+        "name": "Timestamp",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "e6f08b84.4d8398"
+            ]
+        ]
+    },
+    {
+        "id": "e6f08b84.4d8398",
+        "type": "function",
+        "z": "7304cc4d.116a14",
+        "name": "Genera datos Sensor",
+        "func": "// Obtiene la temperatura actual\ntemp = global.get('temp');\n// Actualiza la temperatura\nglobal.set('temp',temp+0.1-global.get('velo_aire'));\n\n// Pone el timestamp en el formato y zona correctos\nvar d = Math.round(new Date(msg.payload).getTime()/1000)+2*3600;\nd = new Date(d*1000).toISOString();\n\n// ID del sensor de temperatura\nvar sensor_id = 31;\n\n// Guarda los datos\nmsg.payload = {Temperature: temp,\n    Timestamp: d,\n    Units: 'ºC',\n    Sensor_Id: sensor_id,\n    reading_Id: msg.payload+sensor_id,\n    magnitud: 'Temperatura'\n};\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "724a688a.507b68"
+            ]
+        ]
+    },
+    {
+        "id": "724a688a.507b68",
+        "type": "switch",
+        "z": "7304cc4d.116a14",
+        "name": "",
+        "property": "st",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "b652f42b.7701f8"
+            ]
+        ]
+    },
+    {
+        "id": "79e5b1ea.3926d",
+        "type": "inject",
+        "z": "7304cc4d.116a14",
+        "name": "Inicialización",
+        "topic": "",
+        "payload": "Start!",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "792cdfcf.435fb"
+            ]
+        ]
+    },
+    {
+        "id": "792cdfcf.435fb",
+        "type": "function",
+        "z": "7304cc4d.116a14",
+        "name": "Inic variables",
+        "func": "flow.set('st',\"1\")\nglobal.set('temp',35)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a718e3c.5ffba",
+        "type": "change",
+        "z": "7304cc4d.116a14",
+        "name": "Fija variable status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "st",
+                "pt": "flow",
+                "to": "payload['Status']",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b652f42b.7701f8",
+        "type": "wiotp out",
+        "z": "7304cc4d.116a14",
+        "authType": "d",
+        "qs": "false",
+        "qsDeviceId": "",
+        "deviceKey": "c8f0dd6e.10cf",
+        "deviceType": "",
+        "deviceId": "",
+        "event": "event",
+        "format": "json",
+        "qos": "",
+        "name": "Datos a IBM",
+        "x": 690,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "768fbf7e.879de",
+        "type": "wiotp in",
+        "z": "7304cc4d.116a14",
+        "authType": "d",
+        "deviceKey": "c8f0dd6e.10cf",
+        "deviceType": "",
+        "deviceId": "",
+        "command": "switch",
+        "commandType": "g",
+        "qos": 0,
+        "name": "Interruptor IBM",
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "4a718e3c.5ffba"
+            ]
+        ]
+    },
+    {
+        "id": "c8f0dd6e.10cf",
+        "type": "wiotp-credentials",
+        "z": "",
+        "name": "",
+        "org": "op8k2b",
+        "serverName": "",
+        "devType": "Sensor-Temp",
+        "devId": "31",
+        "keepalive": "60",
+        "cleansession": true,
+        "tls": "",
+        "usetls": false
+    }
+]
