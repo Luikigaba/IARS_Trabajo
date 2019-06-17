@@ -1,0 +1,226 @@
+[
+    {
+        "id": "e9c915a1.50eb28",
+        "type": "tab",
+        "label": "AC",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2baba2a6.0dbafe",
+        "type": "inject",
+        "z": "e9c915a1.50eb28",
+        "name": "Timestamp",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 60,
+        "wires": [
+            [
+                "da58b95e.e8dfd8"
+            ]
+        ]
+    },
+    {
+        "id": "da58b95e.e8dfd8",
+        "type": "function",
+        "z": "e9c915a1.50eb28",
+        "name": "Genera datos AC",
+        "func": "// Obtiene la temperatura del habitáculo,\n// el estado de encendido del AC y la temperatura\n// de control\nvar temp = global.get('temp');\nvar st = flow.get('st');\nvar control = flow.get('control_aire');\n\n// Fija el ID de actuador\nvar actuator_id = 42;\n\n// Cálculo de la velocidad del compresor necesaria\n// para alcanzar la temperatura de control y\n// cálculo de consumo energético\nif (st=='0'){\n    global.set('velo_aire',0);\n    consumo = 0;\n} else if(st=='1' & (temp-control)>10){\n    global.set('velo_aire',1.5);\n    consumo = 1.5 * 3/3600;\n} else if(st=='1' & (temp-control)>7.5){\n    global.set('velo_aire',1);\n    consumo = 1.2 * 3/3600;\n} else if(st=='1' & (temp-control)>5){\n    global.set('velo_aire',0.75);\n    consumo = 0.8 * 3/3600;\n} else if(st=='1' & (temp-control)>3){\n    global.set('velo_aire',0.5);\n    consumo = 0.5 * 3/3600;\n} else if(st=='1' & (temp-control)>1.5){\n    global.set('velo_aire',0.3);\n    consumo = 0.3 * 3/3600;\n} else if(st=='1' & (temp-control)>0.5){\n    global.set('velo_aire',0.2);\n    consumo = 0.2 * 3/3600;\n} else if(st=='1' & temp<control){\n    global.set('velo_aire',0);\n    consumo = 0;\n}\n\n// Timestamp en buen formato y zona horaria\nvar d = Math.round(new Date(msg.payload).getTime()/1000)+2*3600;\nd = new Date(d*1000).toISOString();\nvar sensor_id = 31;\n\n// Guarda datos en mensaje\nmsg.payload = {Consum: consumo,\n    Timestamp: d,\n    Units: 'kWh',\n    Actuator_Id: actuator_id,\n    Temp_control: control,\n    Action_Id: msg.payload+actuator_id,\n    magnitud: 'Energia'\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [
+                "fe291bc7.e35588"
+            ]
+        ]
+    },
+    {
+        "id": "fe291bc7.e35588",
+        "type": "switch",
+        "z": "e9c915a1.50eb28",
+        "name": "",
+        "property": "st",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 60,
+        "wires": [
+            [
+                "933e1bbb.23b2d8"
+            ]
+        ]
+    },
+    {
+        "id": "889f58ca.11f6b8",
+        "type": "inject",
+        "z": "e9c915a1.50eb28",
+        "name": "inicialización",
+        "topic": "",
+        "payload": "Start!",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "fb7b8cc3.44535"
+            ]
+        ]
+    },
+    {
+        "id": "fb7b8cc3.44535",
+        "type": "function",
+        "z": "e9c915a1.50eb28",
+        "name": "Inic. variables",
+        "func": "flow.set('st',\"0\");\nflow.set('control_aire',24);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a1d741a4.c5818",
+        "type": "change",
+        "z": "e9c915a1.50eb28",
+        "name": "Fija status nuevo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "st",
+                "pt": "flow",
+                "to": "payload['Status']",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "933e1bbb.23b2d8",
+        "type": "wiotp out",
+        "z": "e9c915a1.50eb28",
+        "authType": "d",
+        "qs": "false",
+        "qsDeviceId": "",
+        "deviceKey": "7e96b20d.4ac85c",
+        "deviceType": "",
+        "deviceId": "",
+        "event": "event",
+        "format": "json",
+        "qos": "",
+        "name": "Datos a IBM",
+        "x": 670,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2e46d85.43a3b28",
+        "type": "wiotp in",
+        "z": "e9c915a1.50eb28",
+        "authType": "d",
+        "deviceKey": "7e96b20d.4ac85c",
+        "deviceType": "",
+        "deviceId": "",
+        "command": "switch",
+        "commandType": "g",
+        "qos": 0,
+        "name": "Interruptor IBM",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "a1d741a4.c5818"
+            ]
+        ]
+    },
+    {
+        "id": "8f90ca27.5c7ad8",
+        "type": "wiotp in",
+        "z": "e9c915a1.50eb28",
+        "authType": "d",
+        "deviceKey": "7e96b20d.4ac85c",
+        "deviceType": "",
+        "deviceId": "",
+        "command": "controltemp",
+        "commandType": "g",
+        "qos": 0,
+        "name": "Selección de temperatura IBM",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "9edae9b9.727398"
+            ]
+        ]
+    },
+    {
+        "id": "9edae9b9.727398",
+        "type": "change",
+        "z": "e9c915a1.50eb28",
+        "name": "Fija temperatura control AC",
+        "rules": [
+            {
+                "t": "set",
+                "p": "control_aire",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e96b20d.4ac85c",
+        "type": "wiotp-credentials",
+        "z": "",
+        "name": "",
+        "org": "op8k2b",
+        "serverName": "",
+        "devType": "AC",
+        "devId": "42",
+        "keepalive": "60",
+        "cleansession": true,
+        "tls": "",
+        "usetls": false
+    }
+]
