@@ -1,0 +1,900 @@
+[
+    {
+        "id": "7923109a.d05e7",
+        "type": "tab",
+        "label": "Sensores",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ec32599f.4a7e38",
+        "type": "ibmiot in",
+        "z": "7923109a.d05e7",
+        "authentication": "apiKey",
+        "apiKey": "b75f3fb8.2c947",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "31",
+        "applicationId": "",
+        "deviceType": "Sensor-Temp",
+        "eventType": "event",
+        "commandType": "",
+        "format": "json",
+        "name": "Entrada de sensor",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": false,
+        "allLogicalInterfaces": "",
+        "allEvents": false,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 128.42857360839844,
+        "y": 81.71428108215332,
+        "wires": [
+            [
+                "c7b7e915.a3c7c8"
+            ]
+        ]
+    },
+    {
+        "id": "b901d5e.8ccb128",
+        "type": "http in",
+        "z": "7923109a.d05e7",
+        "name": "Encendido",
+        "url": "/sens/on",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 146.64282989501953,
+        "y": 320.8571538925171,
+        "wires": [
+            [
+                "3b8211a3.64615e",
+                "37891b66.2572a4"
+            ]
+        ]
+    },
+    {
+        "id": "e5d0749f.e51a48",
+        "type": "http in",
+        "z": "7923109a.d05e7",
+        "name": "Apagado",
+        "url": "/sens/off",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 148.64282989501953,
+        "y": 380.8571538925171,
+        "wires": [
+            [
+                "62472959.4c3958",
+                "adf5b007.0994d"
+            ]
+        ]
+    },
+    {
+        "id": "3b8211a3.64615e",
+        "type": "change",
+        "z": "7923109a.d05e7",
+        "name": "Manda status = 1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload['Status']",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 322.64282989501953,
+        "y": 320.8571538925171,
+        "wires": [
+            [
+                "6d02d48c.5a6c7c",
+                "de34486d.7ffa98"
+            ]
+        ]
+    },
+    {
+        "id": "62472959.4c3958",
+        "type": "change",
+        "z": "7923109a.d05e7",
+        "name": "Manda Status = 0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload['Status']",
+                "pt": "msg",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320.14282989501953,
+        "y": 382.8571538925171,
+        "wires": [
+            [
+                "6d02d48c.5a6c7c",
+                "de34486d.7ffa98"
+            ]
+        ]
+    },
+    {
+        "id": "6d02d48c.5a6c7c",
+        "type": "ibmiot out",
+        "z": "7923109a.d05e7",
+        "authentication": "apiKey",
+        "apiKey": "b75f3fb8.2c947",
+        "outputType": "cmd",
+        "deviceId": "31",
+        "deviceType": "Sensor-Temp",
+        "eventCommandType": "switch",
+        "format": "json",
+        "data": "",
+        "qos": 0,
+        "name": "Comando de interruptor",
+        "service": "registered",
+        "x": 817.7857055664062,
+        "y": 354.8571472167969,
+        "wires": []
+    },
+    {
+        "id": "37891b66.2572a4",
+        "type": "http response",
+        "z": "7923109a.d05e7",
+        "name": "OK",
+        "statusCode": "200",
+        "headers": {},
+        "x": 174.64282989501953,
+        "y": 235.8571538925171,
+        "wires": []
+    },
+    {
+        "id": "adf5b007.0994d",
+        "type": "http response",
+        "z": "7923109a.d05e7",
+        "name": "OK",
+        "statusCode": "200",
+        "headers": {},
+        "x": 171.14282989501953,
+        "y": 450.8571538925171,
+        "wires": []
+    },
+    {
+        "id": "de34486d.7ffa98",
+        "type": "ui_switch",
+        "z": "7923109a.d05e7",
+        "name": "",
+        "label": "Interruptor de sensor",
+        "tooltip": "",
+        "group": "e9e4ec6d.c0d2d",
+        "order": 1,
+        "width": "10",
+        "height": "1",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "{\"Status\":\"1\"}",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"Status\":\"0\"}",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 575.6428298950195,
+        "y": 353.42857456207275,
+        "wires": [
+            [
+                "6d02d48c.5a6c7c"
+            ]
+        ]
+    },
+    {
+        "id": "c3988155.7715f",
+        "type": "ui_text",
+        "z": "7923109a.d05e7",
+        "group": "e9e4ec6d.c0d2d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "Valor y antigüedad del dato",
+        "label": "{{msg.payload['Timestamp']}}",
+        "format": "{{msg.payload['magnitud']}}: {{msg.payload['Temperature']}} {{msg.payload['Units']}}",
+        "layout": "row-spread",
+        "x": 654.3570785522461,
+        "y": 81.85713291168213,
+        "wires": []
+    },
+    {
+        "id": "c7b7e915.a3c7c8",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Adecuación datos",
+        "func": "// El mensaje viene con los datos anidados\n// en un campo llamado d\nmsg.payload = msg.payload.d;\n\n// Se da a la fecha un formato string adecuado\nvar aux = msg.payload.Timestamp.split('T');\nmsg.payload.Timestamp = aux[0] + ' ' + aux[1].split('.')[0]\n\n// Se redondea la temperatura a dos decimales\nmsg.payload.Temperature = Math.round(msg.payload.Temperature*100)/100\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 338.1190185546875,
+        "y": 81.42856979370117,
+        "wires": [
+            [
+                "c3988155.7715f",
+                "834b1b69.cd2628",
+                "a73fffc3.504c2"
+            ]
+        ]
+    },
+    {
+        "id": "5565fbae.d72744",
+        "type": "ui_chart",
+        "z": "7923109a.d05e7",
+        "name": "Gráfica en tiempo real de datos",
+        "group": "e9e4ec6d.c0d2d",
+        "order": 3,
+        "width": "10",
+        "height": "7",
+        "label": "{{msg.topic}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Esperando datos",
+        "dot": false,
+        "ymin": "15",
+        "ymax": "45",
+        "removeOlder": "30",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 968.7857055664062,
+        "y": 127.8571424484253,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "834b1b69.cd2628",
+        "type": "change",
+        "z": "7923109a.d05e7",
+        "name": "Selecciona datos y título de la gráfica",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload['magnitud']",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload['Temperature']",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 608.45237159729,
+        "y": 127.71428728103638,
+        "wires": [
+            [
+                "5565fbae.d72744"
+            ]
+        ]
+    },
+    {
+        "id": "8e8ccd12.ec0ab",
+        "type": "dashDB out",
+        "z": "7923109a.d05e7",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "table": "SENSOR_DATA",
+        "name": "Lecturas de sensores a 'SENSOR_DATA'",
+        "x": 963.071403503418,
+        "y": 26.333330154418945,
+        "wires": []
+    },
+    {
+        "id": "a73fffc3.504c2",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Mensaje con variables de la BBDD",
+        "func": "msg.payload = {\n    READ_ID: msg.payload.reading_Id,\n    READ_DATE: msg.payload.Timestamp,\n    READ_VALUE: msg.payload.Temperature,\n    READ_UNITS: msg.payload.Units,\n    SENSOR_ID: msg.payload.Sensor_Id\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 608.0952434539795,
+        "y": 26.9999942779541,
+        "wires": [
+            [
+                "8e8ccd12.ec0ab"
+            ]
+        ]
+    },
+    {
+        "id": "6bf11347.c2b4bc",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Mensaje vacío para limpiar",
+        "func": "msg.payload = [];\nmsg.topic = '';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 609.5952835083008,
+        "y": 177.0476188659668,
+        "wires": [
+            [
+                "5565fbae.d72744"
+            ]
+        ]
+    },
+    {
+        "id": "ce7fde47.e55e4",
+        "type": "dashDB in",
+        "z": "7923109a.d05e7",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 616.1666603088379,
+        "y": 528.7618579864502,
+        "wires": [
+            [
+                "4c4aed3a.c02234"
+            ]
+        ]
+    },
+    {
+        "id": "4c4aed3a.c02234",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Datos en estructura correcta",
+        "func": "// Inicializa variables necesarias\nvar series =[\"Value\"];\nvar labels = [\"Labels\"];\nvar data = [];\nvar i, len, string;\n\n// Bucle que recorre el objeto obtenido\n// de la base de datos\nfor (i = 1, len = msg.payload.length, string = \"\"; i < len; i++) {\n    // Actualiza data con el timestamp y valor de lectura de cada fila\n    data.push({\"x\":new Date((Math.round(new Date(msg.payload[i].READ_DATE).getTime()/1000)-2*3600)*1000), \"y\":msg.payload[i].READ_VALUE});\n}\n\ndata = [data];\n\n// Guarda el nombre de la magnitud para la gráfica\nmsg.topic = msg.payload[1].PROPERTY_NAME;\n\n// Guarda los datos en el mensaje\nmsg.payload = [{series, data, labels}];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 848.1666679382324,
+        "y": 529.3333129882812,
+        "wires": [
+            [
+                "e97c4f2b.e6514"
+            ]
+        ]
+    },
+    {
+        "id": "e97c4f2b.e6514",
+        "type": "ui_chart",
+        "z": "7923109a.d05e7",
+        "name": "Histórico",
+        "group": "f9285086.c014",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "{{msg.topic}}",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "Selecciona fecha",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 1055.1190567016602,
+        "y": 528.5238056182861,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e73d72f0.97803",
+        "type": "ui_form",
+        "z": "7923109a.d05e7",
+        "name": "Cuestionario para consultar histórico",
+        "label": "",
+        "group": "f9285086.c014",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Fecha inicial",
+                "value": "Fecha_ini",
+                "type": "date",
+                "required": true
+            },
+            {
+                "label": "Fecha final",
+                "value": "Fecha_fin",
+                "type": "date",
+                "required": true
+            },
+            {
+                "label": "ID Sensor",
+                "value": "sensor_Id",
+                "type": "number",
+                "required": true
+            },
+            {
+                "label": "Hora inicial",
+                "value": "hora_ini",
+                "type": "number",
+                "required": true
+            },
+            {
+                "label": "Hora final",
+                "value": "hora_fin",
+                "type": "number",
+                "required": true
+            }
+        ],
+        "formValue": {
+            "Fecha_ini": "",
+            "Fecha_fin": "",
+            "sensor_Id": "",
+            "hora_ini": "",
+            "hora_fin": ""
+        },
+        "payload": "",
+        "submit": "Consultar",
+        "cancel": "Cancelar",
+        "topic": "",
+        "x": 164.5,
+        "y": 531,
+        "wires": [
+            [
+                "da85d426.03a948"
+            ]
+        ]
+    },
+    {
+        "id": "da85d426.03a948",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Query consulta",
+        "func": "// Carga las variables que forman la query\nvar fini = Math.round(new Date(msg.payload['Fecha_ini']).getTime()/1000) + 2*3600\nvar ffin = Math.round(new Date(msg.payload['Fecha_fin']).getTime()/1000) + 2*3600\nvar senid = msg.payload['sensor_Id']\nvar hini = msg.payload['hora_ini']\nvar hfin = msg.payload['hora_fin']\n\n// Pone en buen formato la fecha\nfini = new Date(fini*1000).toISOString();\nffin = new Date(ffin*1000).toISOString();\n\nfini = fini.split('T')[0]\nffin = ffin.split('T')[0]\n\n// Modifica los valores de las variables de flujo para ser usadas en la consulta\n// de métrica\nflow.set(['fini','ffin','hini','hfin','senid'],\n         [fini,ffin,hini,hfin,senid])\n         \n// Crea la query\nvar query = \"\"\n\nquery = \"SELECT READ_DATE, READ_VALUE, \"+\n        \"PROPERTY_NAME FROM SENSOR_DATA AS A \"+\n        \"LEFT JOIN PHYSICAL_PROPERTIES AS B\"+\n        \" ON A.READ_UNITS = B.PROPERTY_UNITS \"+\n        \"WHERE READ_DATE >= '\"+fini+\" \"+\n        hini.toString()+\":00:00' AND \"+\n        \"READ_DATE <= '\"+ffin+\" \"+\n        hfin.toString()+\":00:00' AND \"+\n        \"SENSOR_ID = \"+senid.toString()+\n        \" ORDER BY READ_DATE;\"\n        \n// Guarda la query\nmsg.payload = query\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420.49999618530273,
+        "y": 531.0000019073486,
+        "wires": [
+            [
+                "ce7fde47.e55e4"
+            ]
+        ]
+    },
+    {
+        "id": "9ec1fa3f.6af6b8",
+        "type": "ui_dropdown",
+        "z": "7923109a.d05e7",
+        "name": "Métrica a consultar",
+        "label": "Consulta de valor",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "f9285086.c014",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "Máximo",
+                "value": "MAX",
+                "type": "str"
+            },
+            {
+                "label": "Mínimo",
+                "value": "MIN",
+                "type": "str"
+            },
+            {
+                "label": "Medio",
+                "value": "AVG",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 107.5,
+        "y": 600,
+        "wires": [
+            [
+                "f30db463.0c33e8"
+            ]
+        ]
+    },
+    {
+        "id": "ca29af19.f6103",
+        "type": "dashDB in",
+        "z": "7923109a.d05e7",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 543,
+        "y": 600.0000038146973,
+        "wires": [
+            [
+                "78392649.a6c1b8"
+            ]
+        ]
+    },
+    {
+        "id": "f30db463.0c33e8",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Query consulta",
+        "func": "// Carga las variables introducidas en el\n// Cuestionario\nvar fini = flow.get('fini')\nvar ffin = flow.get('ffin')\nvar senid = flow.get('senid')\nvar hini = flow.get('hini')\nvar hfin = flow.get('hfin')\n\n// Carga el valor a consultar\nvar value = msg.payload\n\n// Crea query de consulta\nvar query = \"\"\n\nquery = \"SELECT \"+value+\"(READ_VALUE) AS \"+\n        \"READ_VALUE, READ_UNITS FROM \"+\n        \"SENSOR_DATA WHERE \"+\n        \"READ_DATE >= '\"+fini+\" \"+\n        hini.toString()+\":00:00' AND \"+\n        \"READ_DATE <= '\"+ffin+\" \"+\n        hfin.toString()+\":00:00' AND \"+\n        \"SENSOR_ID = \"+senid.toString()+\n        \" GROUP BY READ_UNITS;\"\n\n// Guarda la query\nmsg.payload = query\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 308,
+        "y": 600,
+        "wires": [
+            [
+                "ca29af19.f6103"
+            ]
+        ]
+    },
+    {
+        "id": "212cb2df.6c285e",
+        "type": "ui_text",
+        "z": "7923109a.d05e7",
+        "group": "f9285086.c014",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Resultado",
+        "format": "{{msg.payload['READ_VALUE']}}{{msg.payload['READ_UNITS']}}",
+        "layout": "row-spread",
+        "x": 977.3571929931641,
+        "y": 597.4762811660767,
+        "wires": []
+    },
+    {
+        "id": "9dc650e1.7fc32",
+        "type": "ui_button",
+        "z": "7923109a.d05e7",
+        "name": "",
+        "group": "e9e4ec6d.c0d2d",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Limpiar gráfica",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 303.02381134033203,
+        "y": 172.28571701049805,
+        "wires": [
+            [
+                "6bf11347.c2b4bc"
+            ]
+        ]
+    },
+    {
+        "id": "78392649.a6c1b8",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Redondeo de valor",
+        "func": "// Redondea la temperatura a dos decimales\nmsg.payload.READ_VALUE = Math.round(msg.payload.READ_VALUE*100)/100;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 756.166690826416,
+        "y": 597.6190223693848,
+        "wires": [
+            [
+                "212cb2df.6c285e"
+            ]
+        ]
+    },
+    {
+        "id": "be07dae1.3c44a8",
+        "type": "ui_text",
+        "z": "7923109a.d05e7",
+        "group": "fc5de9cf.ee6238",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tipo",
+        "format": "{{msg.payload['SENSOR_TYPE']}}",
+        "layout": "row-spread",
+        "x": 859.9999923706055,
+        "y": 653.9999904632568,
+        "wires": []
+    },
+    {
+        "id": "24aa9d89.2b1d82",
+        "type": "ui_dropdown",
+        "z": "7923109a.d05e7",
+        "name": "",
+        "label": "Selecciona ID",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "fc5de9cf.ee6238",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "options": [
+            {
+                "label": "31",
+                "value": 31,
+                "type": "num"
+            },
+            {
+                "label": "Ninguno",
+                "value": "Ninguno",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "",
+        "x": 99.14288330078125,
+        "y": 736.3809900283813,
+        "wires": [
+            [
+                "98fa1527.a843a8"
+            ]
+        ]
+    },
+    {
+        "id": "93035613.c9b4e8",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Query consulta",
+        "func": "// Crea la query para la BD\nvar query = \"\";\n\nquery = \"SELECT * FROM SENSORS_INFO WHERE\"+\n        \" SENSOR_ID=\"+msg.payload.toString()+\n        \";\";\n\n// Guarda la query\nmsg.payload = query;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430.07144927978516,
+        "y": 727.714301109314,
+        "wires": [
+            [
+                "9859d860.483688"
+            ]
+        ]
+    },
+    {
+        "id": "9859d860.483688",
+        "type": "dashDB in",
+        "z": "7923109a.d05e7",
+        "dashDB": "84e1e922.93cef8",
+        "service": "_ext_",
+        "query": "",
+        "params": "",
+        "name": "Query a BBDD",
+        "x": 644.5000457763672,
+        "y": 728.381010055542,
+        "wires": [
+            [
+                "be07dae1.3c44a8",
+                "50741aa2.5f3b34",
+                "978414be.7d7ab8",
+                "4233b70c.4581d8"
+            ]
+        ]
+    },
+    {
+        "id": "98fa1527.a843a8",
+        "type": "switch",
+        "z": "7923109a.d05e7",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "Ninguno",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Ninguno",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 254.14288330078125,
+        "y": 734.4286127090454,
+        "wires": [
+            [
+                "93035613.c9b4e8"
+            ],
+            [
+                "6b153366.3836dc"
+            ]
+        ]
+    },
+    {
+        "id": "50741aa2.5f3b34",
+        "type": "ui_text",
+        "z": "7923109a.d05e7",
+        "group": "fc5de9cf.ee6238",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Info",
+        "format": "{{msg.payload['SENSOR_INFO']}}",
+        "layout": "row-spread",
+        "x": 863.4999923706055,
+        "y": 698.9999904632568,
+        "wires": []
+    },
+    {
+        "id": "978414be.7d7ab8",
+        "type": "ui_text",
+        "z": "7923109a.d05e7",
+        "group": "fc5de9cf.ee6238",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Latitud",
+        "format": "{{msg.payload['SENSOR_LAT']}}",
+        "layout": "row-spread",
+        "x": 860.4999923706055,
+        "y": 741.9999904632568,
+        "wires": []
+    },
+    {
+        "id": "4233b70c.4581d8",
+        "type": "ui_text",
+        "z": "7923109a.d05e7",
+        "group": "fc5de9cf.ee6238",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Longitud",
+        "format": "{{msg.payload['SENSOR_LON']}}",
+        "layout": "row-spread",
+        "x": 872.4999923706055,
+        "y": 782.9999904632568,
+        "wires": []
+    },
+    {
+        "id": "6b153366.3836dc",
+        "type": "function",
+        "z": "7923109a.d05e7",
+        "name": "Datos vacíos",
+        "func": "// Guarda datos vacíos para limpiar\nmsg.payload['SENSOR_TYPE']='';\nmsg.payload['SENSOR_INFO']='';\nmsg.payload['SENSOR_LAT']='';\nmsg.payload['SENSOR_LON']='';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 646.1190643310547,
+        "y": 777.47620677948,
+        "wires": [
+            [
+                "be07dae1.3c44a8",
+                "50741aa2.5f3b34",
+                "978414be.7d7ab8",
+                "4233b70c.4581d8"
+            ]
+        ]
+    },
+    {
+        "id": "b75f3fb8.2c947",
+        "type": "ibmiot",
+        "z": "",
+        "name": "",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "e9e4ec6d.c0d2d",
+        "type": "ui_group",
+        "z": "",
+        "name": "Lectura de datos",
+        "tab": "9a2bea69.47b198",
+        "order": 3,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "84e1e922.93cef8",
+        "type": "dashDB",
+        "z": "",
+        "hostname": "dashdb-txn-sbox-yp-lon02-01.services.eu-gb.bluemix.net",
+        "db": "BLUDB",
+        "port": "50000",
+        "name": ""
+    },
+    {
+        "id": "f9285086.c014",
+        "type": "ui_group",
+        "z": "",
+        "name": "Histórico de datos",
+        "tab": "9a2bea69.47b198",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "fc5de9cf.ee6238",
+        "type": "ui_group",
+        "z": "",
+        "name": "Sensores",
+        "tab": "8aa74e31.134de",
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9a2bea69.47b198",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Sensorización",
+        "icon": "fa-thermometer-quarter",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8aa74e31.134de",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Dispositivos",
+        "icon": "fa-signal",
+        "disabled": false,
+        "hidden": false
+    }
+]
